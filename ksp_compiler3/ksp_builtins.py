@@ -57,6 +57,12 @@ for line in lines:
             params = [p.strip() for p in params.replace('<', '').replace('>', '').split(',') if p.strip()]
             function_signatures[name] = (params, return_type)
 
+        if section == 'preprocessor_functions':
+            m = re.match(r'(?P<name>\w+)(\((?P<params>.*?)\))?(:(?P<return_type>\w+))?', line)
+            name, params, return_type = m.group('name'), m.group('params'), m.group('return_type')
+            params = [p.strip() for p in params.replace('<', '').replace('>', '').split(',') if p.strip()]
+            function_signatures[name] = (params, return_type)
+
         if section == 'variables':
             m = re.match(r'(?P<control_par>\$CONTROL_PAR_\w+?)|(?P<engine_par>\$ENGINE_PAR_\w+?)|(?P<event_par>\$EVENT_PAR_\w+?)', line)
             if m:
