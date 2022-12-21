@@ -181,6 +181,7 @@ class CompileKspThread(threading.Thread):
             optimize = settings.get('ksp_optimize_code', False)
             add_compiled_date_comment = settings.get('ksp_add_compiled_date', True)
             should_play_sound = settings.get('ksp_play_sound', False)
+            target_version = settings.get("version")
 
             error_msg = None
             error_lineno = None
@@ -382,13 +383,16 @@ class KspGlobalSettingToggleCommand(sublime_plugin.ApplicationCommand):
             "ksp_combine_callbacks"         : "Combine Duplicate Callbacks",
             "ksp_add_compiled_date"         : "Add Compilation Date/Time Comment",
             "ksp_comment_inline_functions"  : "Insert Comments When Expanding Functions",
-            "ksp_play_sound"                : "Play Sound When Compilation Finishes"
+            "ksp_play_sound"                : "Play Sound When Compilation Finishes",
         }
 
         s = sublime.load_settings("KSP.sublime-settings")
-        s.set(setting, not s.get(setting, False))
         if version:
-            sublime.load_settings("KSP.sublime-settings").get(s, version)
+            k_versions = ["5.6","5.7","6.0","6.1","6.2","6.3","6.4","6.5","6.6","6.7","7.0","7.1"]
+            for v_key in k_versions:
+                s.set(v_key, False)
+            s.set("version", version)
+        s.set(setting, not s.get(setting, False))
         sublime.save_settings("KSP.sublime-settings")
 
         if s.get(setting, False):
@@ -396,7 +400,10 @@ class KspGlobalSettingToggleCommand(sublime_plugin.ApplicationCommand):
         else:
             option_toggle = "disabled!"
 
-        #log_message('SublimeKSP option %s is %s' % (sksp_options_dict[setting], option_toggle))
+        if version:
+            log_message("SublimeKSP now compiling for Kontakt version %s" % version)
+        else:
+            log_message('SublimeKSP option %s is %s' % (sksp_options_dict[setting], option_toggle))
 
     def is_checked(self, setting, default, version=None):
         return bool(sublime.load_settings("KSP.sublime-settings").get(setting, default))
