@@ -373,7 +373,7 @@ class ReplaceTextWithCommand(sublime_plugin.TextCommand):
 class KspGlobalSettingToggleCommand(sublime_plugin.ApplicationCommand):
     '''Handles toggeled sublime settings'''
 
-    def run(self, setting, default):
+    def run(self, setting, default, version=None):
         sksp_options_dict = {
             "ksp_compact_output"            : "Remove Indents and Empty Lines",
             "ksp_compact_variables"         : "Compact Variables",
@@ -387,6 +387,8 @@ class KspGlobalSettingToggleCommand(sublime_plugin.ApplicationCommand):
 
         s = sublime.load_settings("KSP.sublime-settings")
         s.set(setting, not s.get(setting, False))
+        if version:
+            sublime.load_settings("KSP.sublime-settings").get(s, version)
         sublime.save_settings("KSP.sublime-settings")
 
         if s.get(setting, False):
@@ -394,12 +396,12 @@ class KspGlobalSettingToggleCommand(sublime_plugin.ApplicationCommand):
         else:
             option_toggle = "disabled!"
 
-        log_message('SublimeKSP option %s is %s' % (sksp_options_dict[setting], option_toggle))
+        #log_message('SublimeKSP option %s is %s' % (sksp_options_dict[setting], option_toggle))
 
-    def is_checked(self, setting, default):
+    def is_checked(self, setting, default, version=None):
         return bool(sublime.load_settings("KSP.sublime-settings").get(setting, default))
 
-    def is_enabled(self, setting, default):
+    def is_enabled(self, setting, default, version=None):
         extra_checks = bool(sublime.load_settings("KSP.sublime-settings").get("ksp_extra_checks", default))
         optim_code = bool(sublime.load_settings("KSP.sublime-settings").get("ksp_optimize_code", default))
 
