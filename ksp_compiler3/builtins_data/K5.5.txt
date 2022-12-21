@@ -1,4 +1,3 @@
-builtins_data = '''
 [variables]
 $ALL_EVENTS
 $ALL_GROUPS
@@ -820,7 +819,7 @@ zone_slice_length(<zone-ID>,<slice-index>):integer
 zone_slice_loop_count(<zone-ID>,<loop-index>):integer
 zone_slice_start(<zone-ID>,<slice-index>):integer
 
-[functions_with_forced_parenthesis]
+[functions_with_forced_parentheses]
 mf_reset
 mf_get_buffer_size
 mf_get_byte_one
@@ -924,4 +923,3 @@ $CONTROL_PAR_LABEL
 $CONTROL_PAR_PICTURE
 $CONTROL_PAR_TEXT
 $CONTROL_PAR_TEXTLINE
-'''
