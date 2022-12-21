@@ -14,8 +14,6 @@
 import os
 import re
 
-import sys
-
 class KSPBuiltins:
 	def __init__(self, target_version):
 		self.target_version = target_version
@@ -50,7 +48,7 @@ class KSPBuiltins:
 	def get_data(self, target_version):
 		section = None
 		builtins_filepath = "%s/builtins_data/K%s.txt" % (self.base_path, target_version)
-		builtins_data = open(builtins_filepath, 'r').read()
+		builtins_data = open(builtins_filepath, 'r+', encoding='utf-8').read()
 		lines = builtins_data.replace('\r\n', '\n').split('\n')
 
 		for line in lines:
