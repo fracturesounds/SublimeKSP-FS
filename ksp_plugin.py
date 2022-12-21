@@ -202,11 +202,12 @@ class CompileKspThread(threading.Thread):
 
             try:
                 if self.compile_all_open:
-                    log_message('Compiling %s, script %s of %s...' % (filepath, self.open_views.index(view) + 1, len(self.open_views)))
+                    log_message('Compiling %s, script %s of %s for Kontakt version %s...' % (filepath, self.open_views.index(view) + 1, len(self.open_views), target_version))
                 else:
-                    log_message('Compiling...')
+                    log_message('Compiling for Kontakt version %s...' % target_version)
 
-                self.compiler = ksp_compiler.KSPCompiler(code, self.base_path, 
+                self.compiler = ksp_compiler.KSPCompiler(code, self.base_path,
+                                                         target_version            = target_version, 
                                                          compact                   = compact,
                                                          compact_variables         = compact_variables,
                                                          extra_syntax_checks       = check,
