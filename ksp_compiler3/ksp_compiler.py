@@ -1949,7 +1949,6 @@ class KSPCompiler(object):
         # NOTE(Sam): Add a KSP comment at the beginning of the compiled script to display the time and date it was compiled on
         if self.add_compiled_date_comment:
             localtime = time.asctime( time.localtime(time.time()) )
-            print(self.filepath)
             self.compiled_code = "{ Compiled for Kontakt %s on %s using sKSP }\n" %(self.target_version, localtime) + self.compiled_code
 
     def uncompress_variable_names(self, compiled_code):
