@@ -823,6 +823,16 @@ class ASTModifierNodesToNativeKSP(ASTModifierBase):
                                         node.statements + [incdec_statement])]
         return flatten([self.modify(stmt, *args, **kwargs) for stmt in statements])
 
+    def modifyBinOp(self, node, *args, **kwargs):
+        # hmm trying to create a new BinOp whilst considering multiple arguments is tricky. need some self calling thing
+        expressions = node.get_childnodes()
+        for expr in expressions:
+            if expr.op == 'in':
+                search_expr = ksp_ast.FunctionCall(expr.lexinfo, 'search',(expr.right, expr.left))
+                expr = ksp_ast.BinOp(expr.lexinfo, search_expr, '#', ksp_ast.Integer(expr.lexinfo, -1))
+
+        return flatten([self.modify(expr, *args, **kwargs) for expr in expressions])
+
     def modifyIfStmt(self, node, *args, **kwargs):
         '''Convert if > else if > else statements into just if-else statements by nesting them inside each other'''
 
@@ -846,7 +856,6 @@ class ASTModifierNodesToNativeKSP(ASTModifierBase):
             # the new contents of the else part will be the if-statement just created
             node.condition_stmts_tuples = [node.condition_stmts_tuples[0],
                                            (None, [new_if_stmt])]
-
         return [node]
 
     def modifyPropertyDef(self, node, *args, **kwargs):

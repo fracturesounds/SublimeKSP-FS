@@ -193,6 +193,12 @@ contexts:
         1: keyword.other.source.ksp
         2: entity.name.type.source.ksp
 
+    - match: '^\s*(define +)([a-zA-Z_.0-9]+)'
+      comment: Define definition
+      captures:
+        0: entity.name.type.source.ksp
+        1: keyword.other.source.ksp
+
     - match: '\b(call) +([A-Za-z0-9_.]+)?'
       comment: Function call using 'call'
       captures:

@@ -24,7 +24,7 @@ import os.path
 # *********************************** LEXER *******************************************
 
 reserved = (
-    'FUNCTION', 'TASKFUNC', 'AND', 'OR', 'XOR', 'NOT', 'IF', 'TO', 'DOWNTO', 'ELSE', 'FOR', 'WHILE', 'DECLARE',
+    'FUNCTION', 'TASKFUNC','IN', 'AND', 'OR', 'XOR', 'NOT', 'IF', 'TO', 'DOWNTO', 'ELSE', 'FOR', 'WHILE', 'DECLARE',
     'SELECT', 'CASE', 'CONST', 'POLYPHONIC', 'END', 'LOCAL', 'GLOBAL', 'FAMILY', 'IMPORT', 'AS', 'PROPERTY',
     'UI_LABEL', 'UI_BUTTON', 'UI_SWITCH', 'UI_SLIDER', 'UI_MENU', 'UI_VALUE_EDIT', 'UI_WAVEFORM', 'UI_WAVETABLE', 'UI_KNOB', 'UI_TABLE', 'UI_XY', 'CALL', 'STEP',
     'UI_TEXT_EDIT', 'UI_LEVEL_METER', 'UI_FILE_SELECTOR', 'UI_PANEL', 'UI_MOUSE_AREA', 'OVERRIDE',
@@ -192,6 +192,7 @@ precedence = (
     ('left', 'XOR'),
     ('left', 'AND'),
     ('right', 'NOT'),
+    ('left', 'IN'),
     ('nonassoc', 'COMPARE'),
     ('left', 'BITWISE_OR'),
     ('left', 'BITWISE_XOR'),
@@ -690,7 +691,8 @@ def p_expression_binary(p):
                            | expression AND expression
                            | expression OR expression
                            | expression XOR expression
-                           | expression CONCAT expression'''
+                           | expression CONCAT expression
+                           | expression IN expression'''
     p[0] = BinOp(p, p[1], p[2], p[3])
 
 def p_expression_unary(p):
