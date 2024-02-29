@@ -19,11 +19,11 @@ from decimal import Decimal
 from ksp_builtins import functions_with_forced_parentheses
 
 precedence = {  '&' :  0,
-                'or':  1,
-                'xor': 2,
-                'and': 3,
-                'not': 4,
-                'in':  5,
+                'in':  1,
+                'or': 2,
+                'xor': 3,
+                'and': 4,
+                'not':  5,
                 '=': 6, '<': 6, '>': 6, '<=': 6, '>=': 6, '#': 6,
                 '.or.': 7,
                 '.xor.': 8,
